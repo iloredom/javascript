@@ -1,72 +1,54 @@
-debugger;
+const tablaUsuariosId = "tablaUsuarios";
 
+const eventsId = Object.freeze({
+  DOMContentLoaded: "DOMContentLoaded",
+  click: "click",
+});
+
+const formUserIds = Object.freeze({
+  name: "name",
+  nameValidationError: "nameValidationError",
+  addUser: "addUser",
+});
+
+class Usuario {
+  constructor({ nombre }) {
+    this.nombre = nombre;
+  }
+}
+
+/**
+ * @typedef {Usuario[]}
+ **/
 const usuarios = [];
 
-function menu() {
-  const eleccion = validarEleccion();
-  switch (eleccion) {
-    case "1":
-      agregar();
-      break;
-    case "2":
-      eliminar();
-      break;
-    case "3":
-      actualizar();
-      break;
-    case "4":
-      listar();
-      break;
-    default:
-      if (confirm("¿salir del menu")) {
-        alert("Fin del programa");
-      } else {
-        menu();
-      }
-      break;
-  }
-}
+document.addEventListener(eventsId.DOMContentLoaded, function () {});
 
-function validarEleccion() {
-  const menu = `Backoffice de Usuarios
--------------
-1 - Agregar 
-2 - Eliminar
-3 - Actualizar
-4 - Listar
-5 - Salir
--------------
-Por favor, elija una opción:`;
-
-  const eleccion = prompt(menu);
-  if (["1", "2", "3", "4", "5"].includes(eleccion)) {
-    return eleccion;
-  } else {
-    alert("opcion invalida");
-    return validarEleccion();
-  }
-}
+document
+  .getElementById(formUserIds.addUser)
+  .addEventListener(eventsId.click, function (evento) {
+    evento.preventDefault();
+    agregar();
+  });
 
 function agregar() {
-  const nombre = validarNombre();
-  if (usuarios.some((usuario) => usuario.nombre === nombre)) {
-    alert(`El usuario ${nombre} ya existe`);
+  const errorMessage = document.getElementById(formUserIds.nameValidationError);
+  const nombre = document.getElementById(formUserIds.name).value;
+
+  if (validarNombre(nombre)) {
+    const usuario = new Usuario({ nombre: nombre });
+    usuarios.push(usuario);
+    agregarUsuarioEnLaTabla(usuario);
+    errorMessage.textContent = "";
   } else {
-    usuarios.push({
-      nombre: nombre,
-    });
-    alert(`Se agrego a ${nombre}`);
+    errorMessage.textContent = `El usuario ${nombre} ya existe`;
   }
-  menu();
 }
 
-function validarNombre() {
-  const nombre = prompt("Ingrese el nombre del usuario:").trim();
-
-  if (nombre && nombre !== "") {
-    return nombre;
-  }
-  return validarNombre();
+function validarNombre(nombre) {
+  const isValidName = nombre && nombre !== "";
+  const userExist = usuarios.some((usuario) => usuario.nombre === nombre);
+  return isValidName && !userExist;
 }
 
 function eliminar() {
@@ -78,12 +60,10 @@ function eliminar() {
     const usuarioEliminado = usuarios.splice(index, 1);
     alert(`Se elimino a ${usuarioEliminado[0].nombre}`);
   }
-  menu();
 }
 
 function actualizar() {
   alert(`no se puede actualizar usuarios`);
-  menu();
 }
 
 function listar() {
@@ -100,7 +80,11 @@ function listar() {
     alert(lista);
     console.log(lista);
   }
-  menu();
 }
 
-menu();
+function agregarUsuarioEnLaTabla(usuario) {
+  const tabla = document.getElementById(tablaUsuariosId);
+  const fila = tabla.insertRow();
+  const celda = fila.insertCell();
+  celda.textContent = usuario.nombre;
+}
