@@ -1,0 +1,11 @@
+/* style.css */
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+/* Tu CSS personalizado después */
+body {
+  padding-top: 20px;
+}
+
+.mi-clase {
+  background-color: #f8f9fa;
+}
