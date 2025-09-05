@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <link rel="stylesheet" href="./css/styles.css" />
-</head>
+  <body>
+    <nav>
+      <h1>Backoffice de Usuarios</h1>
+    </nav>
 
-<body>
-  <nav>
-    <h1>
-      Backoffice de Usuarios
-    </h1>
-  </nav>
+    <form>
+      <label for="name">Nombre de usuario:</label>
+      <input type="text" id="name" name="name" placeholder="Nombre" required />
+      <small id="nameValidationError"></small>
+      <button id="addUser">Agregar</button>
+    </form>
 
-  <form>
-    <label for="name">Nombre de usuario:</label>
-    <input type="text" id="name" name="name" placeholder="Nombre" required />
-    <small id="nameValidationError"></small>
-    <button id="addUser">Agregar</button>
-  </form>
+    <table id="tablaUsuarios" class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-  <table id="tablaUsuarios">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-
-  <script src="./js/app.js"></script>
-</body>
-
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
 </html>
